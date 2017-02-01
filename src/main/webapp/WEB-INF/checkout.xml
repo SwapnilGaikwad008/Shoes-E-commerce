@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow
+  http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd">
+
+<var name= "shippingAddress" class="com.niit.shoppingcart.model.ShippingAddress"/>
+<var name= "billingAddress"  class="com.niit.shoppingcart.model.BillingAddress"/>
+  <var name= "cart" class= "com.niit.shoppingcart.model.Cart"/>
+<var name= "orders" class= "com.niit.shoppingcart.model.Orders"/>
+<var name= "paymentMethod" class= "com.niit.shoppingcart.model.PaymentMethod"></var>
+<var name="orderWebflow" class="com.niit.shoppingcart.webflow.OrderWebflow"/>
+
+<on-start>
+<evaluate expression="orderWebflow.initFlow()" result="flowScope.order"/>
+</on-start>
+
+<view-state id="flowExecutor" view="/shippingAddress" model="shippingAddress">
+<transition on="submitShippingAddress" to= "shippingDetails" />
+</view-state>
+
+<action-state id="shippingDetails">
+<evaluate
+    expression="orderWebflow.addShippingAddress(flowScope.order,shippingAddress)"></evaluate>
+    <transition on="success" to="viewBillingDetails" />
+    <transition on ="fail" to="cart_checkout"/>
+    </action-state>
+    
+    <view-state id="viewBillingDetails" view="/billingAddress"  model="billingAddress">
+    <transition on="submitBillingAddress" to="billingDetails" />
+    <transition on ="backToShippingAddress" to="cart_checkout"/>
+    </view-state>
+    
+<action-state id="billingDetails">
+<evaluate
+    expression="orderWebflow.addBillingAddress(flowScope.order,billingAddress)"></evaluate>
+    <transition on="success" to="viewPaymentDetails" />
+    </action-state>
+    
+    <view-state id="viewPaymentDetails" view="/payment" model="paymentMethod">
+<transition on="submitPaymentMethod" to= "paymentDetails" />
+</view-state>
+
+<action-state id="paymentDetails">
+<evaluate
+    expression="orderWebflow.addPaymentMethod(flowScope.order,paymentMethod)"></evaluate>
+    <transition on="success" to="orderConfirm" />
+    </action-state>
+    
+    <view-state id="orderConfirm" view="/orderConfirmed">
+    <transition on="finalIndex" to="toIndex"/>
+    </view-state>
+    
+    <end-state id= "toIndex" view="externalRedirect:contextRelative:/" />
+    
+    <global-transitions>
+    <transition on ="cancel" to ="toIndex"/>
+    </global-transitions>
+    
+   </flow>
