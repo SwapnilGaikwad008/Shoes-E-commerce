@@ -8,13 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.niit.shoppingcart.dao.CartDAO;
 import com.niit.shoppingcart.dao.ProductDAO;
 import com.niit.shoppingcart.dao.SupplierDAO;
+import com.niit.shoppingcart.model.Cart;
 import com.niit.shoppingcart.model.Category;
 import com.niit.shoppingcart.model.Product;
 import com.niit.shoppingcart.model.Supplier;
@@ -36,6 +39,12 @@ public class ProductController {
 
 	@Autowired
 	SupplierDAO supplierDAO;
+	
+	@Autowired
+	private CartDAO cartDAO;
+	
+	@Autowired
+	private Cart cart;
 	
 	public ProductController() {
 
@@ -103,13 +112,14 @@ public class ProductController {
 		return "index";
 	}
 
-	 @RequestMapping(value="/show_product")
-	  public ModelAndView getSelectedProduct(@RequestParam("id")String productId,RedirectAttributes redirect)	 
-	  {
-		
-		 ModelAndView mv=new ModelAndView("redirect:/index");
-		 redirect.addFlashAttribute("selectedProduct", productDAO.get(product.getId()));
-		
-		 return mv;
-	 }
+	 @RequestMapping("show_product/get/{id}")
+	    public ModelAndView getSelectedProduct(@PathVariable("id") String id, RedirectAttributes redirectAttributes,HttpSession session )
+	    {
+	    
+	    	ModelAndView mv = new ModelAndView("redirect:/index");			
+	    	redirectAttributes.addFlashAttribute("selectedProduct", productDAO.get(id));
+	    	String loggedInUserid = (String) session.getAttribute("loggedInUserID");
+	  
+	        return mv;
+	     }
 }

@@ -49,7 +49,7 @@
 
                  
 
-            <div class="form-actions">
+            <div class="form-actions" style="float: right;">
               <button type="submit" class="btn  btn-lg btn " >Add Category</button>
       
             </div>
@@ -59,10 +59,9 @@
         
         
       </div>
-    </form>
-
-     <div class="form-actions " style="float: right">
-              <button type="submit" class="btn  btn-lg btn "><a href="categorytable">View Category</a></button>
+    </form>           
+            <div class="form-actions " style="float: right;padding:10px;">
+         <button type="submit" class="btn  btn-lg btn " style="padding:10px;"><a href="categorytable">View Category</a></button>
             </div>
       
     </div>

@@ -20,7 +20,7 @@ please login with credentials here....
     <h1 class="well center"><center>Login</center></h1>
     <div class="col-lg-12 well">
         <div class="row">
-        <form action="validate">
+        <form action="<%-- ${pageContext.request.contextPath}/ --%>validate">
             <div class="col-sm-12">
                 <div class="row">
                     <div class="col-sm-12 form-group">

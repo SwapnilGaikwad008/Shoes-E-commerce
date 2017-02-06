@@ -100,8 +100,6 @@ public class HomeController {
 		log.debug("Ending of the method onLoad");
 		return mv;
 	}
-
-
 	
 	
 }

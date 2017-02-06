@@ -9,7 +9,12 @@
 <body>
  <jsp:include page="adminHome.jsp" />
 
+    
 
+
+<c:if test="${UserClickedAdmin}">
+	<jsp:include page="adminHome.jsp" />
+	</c:if>
 
  <c:if test="${UserClickedCATEGORY}">
 	<jsp:include page="category.jsp" />

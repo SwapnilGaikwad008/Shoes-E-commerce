@@ -92,16 +92,16 @@ ${message }
                 <input type="file"  name="image"  placeholder="Image" path="image" required ></input>
               </div>
             
-            <div class="form-actions">
+            <div class="form-actions " style="float:right">
               <button type="submit" class="btn  btn-lg btn ">Add Product</button>
             </div>
 
         </div>
       </div>
     </form>
-
-    <div class="form-actions " style="float: right">
-              <button type="submit" class="btn  btn-lg btn "><a href="producttable">View Product</button>
+            
+             <div class="form-actions " style="float: right;padding-right:10px;margin-bottom:10px;">
+         <button type="submit" class="btn  btn-lg btn " ><a href="producttable">View Product</a></button>
             </div>
       
     </div>

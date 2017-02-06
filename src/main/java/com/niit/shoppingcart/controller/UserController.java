@@ -94,14 +94,25 @@ public class UserController {
 
 		// ModelAndView mv = new ModelAndView("/index");
 		ModelAndView mv = new ModelAndView("/index");
-		ModelAndView mu = new ModelAndView("/adminHome");
+		ModelAndView mu = new ModelAndView("/admin");
 		
 		User = UserDAO.isValidUser(emailId, password);
 		// if the record exist with this UserID and password it will return User
 		// details else will return null
-
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		/*
+		String emailId = null;
+		if (auth != null) {
+			emailId = auth.getName();
+		}
+		
+		*/
+		
 		if (User != null) {
 			log.debug("Valid Credentials");
+			
+			
 			
 			session.setAttribute("loggedInUser", User.getName());
 			session.setAttribute("loggedInUserID", User.getId());
@@ -126,6 +137,7 @@ public class UserController {
 
 			if("ROLE_ADMIN".equalsIgnoreCase(User.getRole())) {
 				session.setAttribute("isAdmin", true);
+				return mu;
 			} else {
 				session.setAttribute("isAdmin", false);
 			}

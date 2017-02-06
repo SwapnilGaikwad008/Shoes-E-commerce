@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd 
+    http://www.springframework.org/schema/security 
+    http://www.springframework.org/schema/security/spring-security.xsd"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns="http://www.springframework.org/schema/beans">
+	
+
+<security:http auto-config ="true">
+<!-- 
+    <security:intercept-url access="hasRole('ROLE_ADMIN')"
+			pattern="/category" />
+	<security:intercept-url access="hasRole('ROLE_ADMIN')"
+			pattern="/addcategory"/>
+	<security:intercept-url access="hasRole('ROLE_ADMIN')"
+			pattern="/categorytable" />
+	<security:intercept-url access="hasRole('ROLE_ADMIN')"
+			pattern="/manage_category_remove" />
+	<security:intercept-url access="hasRole('ROLE_ADMIN')"
+			pattern="/manage_category_edit" />
+			
+			
+	<security:intercept-url access="hasRole('ROLE_ADMIN')"
+			pattern="/subcategory" />
+	<security:intercept-url access="hasRole('ROLE_ADMIN')"
+			pattern="/addsubcategory" />
+	<security:intercept-url access="hasRole('ROLE_ADMIN')"
+			pattern="/subcategorytable" />
+		<security:intercept-url access="hasRole('ROLE_ADMIN')"
+			pattern="/manage_subcategory_remove" />		
+	<security:intercept-url access="hasRole('ROLE_ADMIN')"
+			pattern="/manage_subcategory_edit" />
+			
+			
+	<security:intercept-url access="hasRole('ROLE_ADMIN')"
+			pattern="/supplier" />
+	<security:intercept-url access="hasRole('ROLE_ADMIN')"
+			pattern="/addsupplier" />
+	<security:intercept-url access="hasRole('ROLE_ADMIN')"
+			pattern="/suppliertable" />
+	<security:intercept-url access="hasRole('ROLE_ADMIN')"
+			pattern="/manage_supplier_remove" />
+	<security:intercept-url access="hasRole('ROLE_ADMIN')"
+			pattern="//manage_supplier_edit" />
+			
+			
+	<security:intercept-url access="hasRole('ROLE_ADMIN')"
+			pattern="/product" />
+	<security:intercept-url access="hasRole('ROLE_ADMIN')"
+			pattern="/addproduct" />
+	<security:intercept-url access="hasRole('ROLE_ADMIN')"
+			pattern="/producttable" />
+	<security:intercept-url access="hasRole('ROLE_ADMIN')"
+			pattern="/manage_product_remove" />
+	<security:intercept-url access="hasRole('ROLE_ADMIN')"
+			pattern="/manage_product_edit" />
+																																					
+			 -->
+		
+<!-- 
+      <security:intercept-url access="hasRole('ROLE_USER')"
+			pattern="/cartTable" />
+	 <security:intercept-url access="hasRole('ROLE_USER')"
+			pattern="/addToCart" />		
+	<security:intercept-url access="hasRole('ROLE_USER')"
+			pattern="/manage_cart_remove" />	
+	<security:intercept-url access="hasRole('ROLE_USER')"
+			pattern="/manage_cart_remove" />					
+			
+<security:intercept-url pattern="/cart_checkout**"
+       access ="hasRole('ROLE_USER')"/>
+ -->
+       
+        <security:form-login login-page ="/login"
+                             always-use-default-target = "true"
+                             default-target-url="/validate"
+                             authentication-failure-forward-url = "/loginError"
+                             username-parameter="emailId"
+                             password-parameter="password" />
+         <security:logout logout-url="/logout" invalidate-session ="true" logout-success-url ="/index" />
+         <security:csrf disabled="true"/>
+         <security:access-denied-handler error-page="/accessDenied"/>
+ </security:http>
+    
+    
+ <security:authentication-manager>
+   <security:authentication-provider>
+     <security:jdbc-user-service 
+       data-source-ref="dataSource"
+        authorities-by-username-query= "select mail, role from user where mail=?" 
+       users-by-username-query="select mail, password, true from user where mail=?"/>
+ </security:authentication-provider>
+  </security:authentication-manager>   
+</beans>

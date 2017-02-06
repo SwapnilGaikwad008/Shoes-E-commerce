@@ -97,11 +97,13 @@ HYPERVENOM 3<br>
 <div class="dropdown">
   <button class="btn btn-Default dropdown-toggle" type="button" data-toggle="dropdown">Mens shop Now
   <span class="caret"></span></button>
+  <c:forEach items="${productListBySubCategory}" var="product">
   <ul class="dropdown-menu" aria-labelledby="dLabel-${category.name}" >
     <c:forEach items="${subcategoryList}" var="subcategory">
               <li><a href="<c:url value='/displayProduct?categoryId=${category.id}&subCategoryId=${subcategory.id}'/>">${subcategory.name}</a></li>
             </c:forEach>
   </ul>
+  </c:forEach>
 </div></h2>
 
 </div>

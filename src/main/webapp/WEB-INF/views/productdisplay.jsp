@@ -29,14 +29,13 @@ font-family: san-serif;
     			<c:forEach items="${productListBySubCategory}" var="product">
         <div class="col-sm-3" style="margin-left:70px;padding-bottom:10px">
                <img src="resources/img/${product.id}.jpg" height="220" width="220" style="padding:5px;border-bottom:1px solid grey">           
-                   <h4>${product.name}</h4>
+      <%--  <a href="show_product/get/${product.id}"    >  --%> <h4>${product.name}</h4><!-- </a> -->
         <h4>price ${product.price}</h4>
                   <c:if test="${loggedOut == false}">
-					<a href="<c:url value='/addToCart?productId=${product.id}'/>">Add to cart</a>
+					<a href="show_product/get/${product.id}">View Product</a>
 				 </c:if>
                </div>
        </c:forEach>
-       
 </div>
 
 </body>

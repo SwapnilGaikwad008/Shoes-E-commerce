@@ -58,23 +58,25 @@
           <input type="text" class="form-control" placeholder="Search">
         </div>
          <ul class="nav navbar-nav navbar-right" style="margin-top: -6px;margin-bottom: -7px";>
-        <c:choose>
-		    <c:when test="${loggedOut}">
+      
+		    <c:if test="${empty loggedInUserID}">
 		        <li><a href="registration">SIGN UP</a></li>
       			<li><a href="login">LOGIN</a></li>
-		    </c:when>   
-		     <c:when test="${isAdmin}">
+		    </c:if>   
+		    <%--  <c:if test="${isAdmin}">
 		    	<li><a href="category">Category</a></li>
 			   	<li><a href="subcategory">SubCategory</a></li>
 			   	<li><a href="supplier">Supplier</a></li>
 			    <li><a href="product">Product</a></li>
-		    </c:when>
-		     <c:otherwise>
+		    </c:if> --%>
+		     <c:if test="${not empty loggedInUserID}">
+		          
 		    	<li><a>Welcome ${loggedInUser}</a></li>
 		    	<li><a href="cartTable">Cart(${cartItemCount})</a></li>
 		        <li><a href="logout">LOGOUT</a></li>
-		    </c:otherwise>
-		</c:choose>
+		       
+		    </c:if>
+		
     </ul>
       </form>
       

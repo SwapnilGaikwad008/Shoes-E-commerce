@@ -16,7 +16,6 @@ ${successMsg}
 <jsp:include page="carousel.jsp"></jsp:include>
 
 
-
-	<jsp:include page="footer.jsp"></jsp:include>
+<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>

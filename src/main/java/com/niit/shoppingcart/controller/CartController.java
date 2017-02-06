@@ -101,7 +101,4 @@ public class CartController {
 		model.addAttribute("ShowMessage", true);
 		return "index";
 	}
-
- 
-
 }

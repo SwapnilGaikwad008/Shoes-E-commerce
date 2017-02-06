@@ -11,31 +11,39 @@
 
 <jsp:include page="navbar.jsp"></jsp:include>
 
-${successMsg}
-            <c:if test="${ShowMainPage}">
+
+
+	${successMsg}
+		
+	<c:if test="${!empty selectedProduct.name}">
+	<%@ include file="selectedProduct.jsp" %>
+	</c:if>
+	
+	 <c:if test="${ShowMainPage}">
 				<jsp:include page="mainpage.jsp" />
 			</c:if>
-			
-			<c:if test="${ShowLoginPage}">
-				<jsp:include page="login.jsp" />
-			</c:if>	
-			
-			<c:if test="${ShowRegistrationPage}">
-				<jsp:include page="registration.jsp" />
-			</c:if>	
-			
-			
-<c:if test="${ShowProductsForSubCategory}">
-<jsp:include page="productdisplay.jsp" />
-</c:if>	
-			
-			
-<c:if test="${!empty selectedProduct.product.id}">
-   <jsp:include page="selectedProduct.jsp"></jsp:include>
-</c:if>
-		
-			<c:if test="${ShowCartTable}">
-				<jsp:include page="carttable.jsp" />
-			</c:if>	
+	
+
+	<c:if test="${ShowLoginPage}">
+		<jsp:include page="login.jsp" />
+	</c:if>
+
+	<c:if test="${ShowRegistrationPage}">
+		<jsp:include page="registration.jsp" />
+	</c:if>
+
+
+	<c:if test="${ShowProductsForSubCategory}">
+		<jsp:include page="productdisplay.jsp" />
+	</c:if>
+
+
+	
+
+	<c:if test="${ShowCartTable}">
+		<jsp:include page="carttable.jsp" />
+	</c:if>
+	
+	
 </body>
 </html>
