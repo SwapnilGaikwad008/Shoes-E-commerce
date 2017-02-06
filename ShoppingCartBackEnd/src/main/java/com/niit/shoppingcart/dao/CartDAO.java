@@ -12,6 +12,4 @@ public interface CartDAO {
 	public Cart get(int id);
 	public Long getTotalAmount(String userId);
 	public List<Cart> getActiveByUser(String userId);
-
-
 }
