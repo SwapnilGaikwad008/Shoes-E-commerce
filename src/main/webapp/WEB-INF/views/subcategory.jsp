@@ -50,7 +50,7 @@
                  
 
             <div class="form-actions">
-              <button type="submit" class="btn  btn-lg btn " style="float:right;padding:10px;" >Add Sub Category</button>
+              <button type="submit" class="btn  btn-lg btn " >Add Sub Category</button>
       
             </div>
 
@@ -61,8 +61,8 @@
       </div>
     </form>
 
-     <div class="form-actions " style="float: right;padding:10px;">
-         <button type="submit" class="btn  btn-lg btn " style="padding:10px;"><a href="subcategorytable">View Sub Category</a></button>
+     <div class="form-actions " style="float: right">
+              <a href="subcategorytable">View Sub Category</a>
             </div>
       
     </div>

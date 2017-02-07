@@ -9,7 +9,11 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
@@ -78,6 +82,10 @@ public class UserController {
 	@Autowired
 	private HttpSession session;
 
+	@Autowired
+	@Qualifier("myAuthenticationManager")
+	private AuthenticationManager authenticationManager;
+
 	/**
 	 * if invalid credentials -> Home page , login , error message if valid
 	 * credentials && he is admin -> AdminHome page ,logout link if valid
@@ -88,7 +96,7 @@ public class UserController {
 	 * @return it will return data and page name where to return
 	 */
 	@RequestMapping(value = "/validate", method = RequestMethod.GET)
-	public ModelAndView validate(@RequestParam(value = "emailId") String emailId,
+	public ModelAndView validate(HttpServletRequest request,@RequestParam(value = "emailId") String emailId,
 			@RequestParam(value = "password") String password) {
 		log.debug("Starting of the method validate");
 
@@ -99,21 +107,21 @@ public class UserController {
 		User = UserDAO.isValidUser(emailId, password);
 		// if the record exist with this UserID and password it will return User
 		// details else will return null
-		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		/*
-		String emailId = null;
-		if (auth != null) {
-			emailId = auth.getName();
-		}
-		
-		*/
-		
+
 		if (User != null) {
-			log.debug("Valid Credentials");
-			
-			
-			
+		log.debug("Valid Credentials");
+		
+		UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(emailId, password);
+
+		// Authenticate the user
+	    Authentication authentication = authenticationManager.authenticate(authRequest);
+	    SecurityContext securityContext = SecurityContextHolder.getContext();
+	    securityContext.setAuthentication(authentication);
+		
+		HttpSession session = request.getSession(true);
+		session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
+	
+		
 			session.setAttribute("loggedInUser", User.getName());
 			session.setAttribute("loggedInUserID", User.getId());
 
@@ -154,29 +162,34 @@ public class UserController {
 	}
 	
 	
+
 	@RequestMapping("/logout")
-	public ModelAndView logout(HttpServletRequest request,HttpServletResponse response) {
+	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) {
 		log.debug("Starting of the method logout");
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		if (auth != null) {
+			new SecurityContextLogoutHandler().logout(request, response, auth);
+		}
+
 		ModelAndView mv = new ModelAndView("/index");
-		session.invalidate(); // will remove the attributes which are added
-								// session
+
+		HttpSession session = request.getSession(false);
+		if (session != null)
+			session.invalidate(); // will remove the attributes which are added to session
+
 		session = request.getSession(true);
-		session.setAttribute("category", category);
+
+		session.setAttribute("supplierList", supplierDAO.list());
 		session.setAttribute("categoryList", categoryDAO.list());
 		session.setAttribute("subcategoryList", subcategoryDAO.list());
 		session.setAttribute("productList", productDAO.list());
 
-		mv.addObject("successMsg", "You successfully logged out");
-		mv.addObject("loggedOut", "true");
-		
-		 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		
-		    if (auth != null){    
-		        new SecurityContextLogoutHandler().logout(request, response, auth);
-		    }
-		  //  return "redirect:/login?logout";
-		    
-		    
+		mv.addObject("message", "You have successfully logged out");
+		mv.addObject("ShowMessage", true);
+		session.setAttribute("loggedOut", true);
+
 		log.debug("Ending of the method logout");
 		return mv;
 	}
@@ -199,20 +212,24 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/loginError", method = RequestMethod.GET)
-	public String loginError(Model model) {
+	public ModelAndView loginError(Model model) {
 		log.debug("Starting of the method loginError");
-		model.addAttribute("errorMessage", "Login Error");
+		ModelAndView mv = new ModelAndView("index");
+		mv.addObject("ShowMessage", true);
+		mv.addObject("message", "Invalid credentials");
 		log.debug("Ending of the method loginError");
-		return "index";
+		return mv;
 
 	}
 
 	@RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
-	public String accessDenied(Model model) {
+	public ModelAndView accessDenied(Model model) {
 		log.debug("Starting of the method accessDenied");
-		model.addAttribute("errorMessage", "You are not authorized to access this page");
+		ModelAndView mv = new ModelAndView("index");
+		mv.addObject("ShowMessage", true);
+		mv.addObject("message", "You are not authorized to access this page");
 		log.debug("Ending of the method accessDenied");
-		return "index";
+		return mv;
 
 	}
 

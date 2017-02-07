@@ -1,6 +1,7 @@
 package com.niit.shoppingcart.webflow;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -80,15 +81,22 @@ public class OrderWebflow  implements Serializable{
 	
 	public String addPaymentMethod(Orders orders, PaymentMethod paymentMethod)
 	{
-log.debug("starting of the method addPaymentMethod");
-		
-		
+		log.debug("starting of the method addPaymentMethod");
+
 		orders.setPaymentMethod(paymentMethod.getPaymentMethod());
 		
+		String userId = (String) httpSession.getAttribute("loggedInUserID");
+		List<Cart> cartList = cartDAO.getActiveByUser(userId);
+		for(Cart cart : cartList){
+			cart.setOrdered(1);
+			cartDAO.update(cart);
+		}
 		
-		
+		cartList = cartDAO.getActiveByUser(userId);
+		httpSession.setAttribute("cartItemCount", cartList.size());
+
 		log.debug("Ending of the method addPaymentMethod");
-		
+
 		return "success";
 	}
 	

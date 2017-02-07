@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.niit.shoppingcart.dao.CartDAO;
@@ -57,17 +59,36 @@ public class HomeController {
 	public ModelAndView onLoad(HttpSession session) {
 		log.debug("Starting of the method onLoad");
 		ModelAndView mv = new ModelAndView("/index");
-		session.setAttribute("loggedOut", true);
-		mv.addObject("ShowMainPage", true);
-		session.setAttribute("supplierList", supplierDAO.list());
-		session.setAttribute("categoryList", categoryDAO.list());
-		session.setAttribute("subcategoryList", subcategoryDAO.list());
-		session.setAttribute("productList", productDAO.list());
 		
+		if(session.getAttribute("loggedInUserID") == null) {
+			session.setAttribute("loggedOut", true);
+			session.setAttribute("supplierList", supplierDAO.list());
+			session.setAttribute("categoryList", categoryDAO.list());
+			session.setAttribute("subcategoryList", subcategoryDAO.list());
+			session.setAttribute("productList", productDAO.list());
+		}
+		
+		mv.addObject("ShowMainPage", true);
 		log.debug("Ending of the method onLoad");
 		return mv;
 	}
 	
+	@RequestMapping("/index")
+	public ModelAndView home(HttpSession session) {
+		log.debug("Starting of the method onLoad");
+		ModelAndView mv = new ModelAndView("/index");
+		
+		if(session.getAttribute("loggedInUserID") == null) {
+			session.setAttribute("loggedOut", true);
+			session.setAttribute("categoryList", categoryDAO.list());
+			session.setAttribute("subcategoryList", subcategoryDAO.list());
+			session.setAttribute("productList", productDAO.list());
+		}
+		
+		mv.addObject("ShowMainPage", true);
+		log.debug("Ending of the method onLoad");
+		return mv;
+	}
 
 
 	@RequestMapping("/registration")
@@ -87,19 +108,12 @@ public class HomeController {
 		log.debug("Ending of the method loginHere");
 		return mv;
 	}
-	
-	@RequestMapping("/index")
-	public ModelAndView home(HttpSession session) {
-		log.debug("Starting of the method onLoad");
+
+	/*
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public ModelAndView search(@RequestParam(value = "searchKey") String searchKey) {
 		ModelAndView mv = new ModelAndView("/index");
-		session.setAttribute("loggedOut", true);
-		mv.addObject("ShowMainPage", true);
-		session.setAttribute("categoryList", categoryDAO.list());
-		session.setAttribute("subcategoryList", subcategoryDAO.list());
-		session.setAttribute("productList", productDAO.list());
-		log.debug("Ending of the method onLoad");
 		return mv;
-	}
-	
-	
+		
+	}*/
 }

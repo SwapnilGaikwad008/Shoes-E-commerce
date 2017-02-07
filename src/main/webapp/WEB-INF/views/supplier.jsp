@@ -48,7 +48,7 @@
 
                  
 
-            <div class="form-actions" style="float: right;padding:0px;">
+            <div class="form-actions">
               <button type="submit" class="btn  btn-lg btn " >Add Supplier</button>
       
             </div>
@@ -59,8 +59,9 @@
         
       </div>
     </form>
-             <div class="form-actions " style="float: right;padding:10px;">
-         <button type="submit" class="btn  btn-lg btn " style="padding:10px;"><a href="suppliertable">View Supplier</a></button>
+
+     <div class="form-actions " style="float: right">
+              <button type="submit" class="btn  btn-lg btn "><a href="suppliertable">View Supplier</a></button>
             </div>
       
     </div>

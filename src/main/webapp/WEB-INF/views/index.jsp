@@ -22,7 +22,9 @@
 	 <c:if test="${ShowMainPage}">
 				<jsp:include page="mainpage.jsp" />
 			</c:if>
-	
+	<c:if test="${ShowMessage}">
+				<jsp:include page="message.jsp" />
+			</c:if>	
 
 	<c:if test="${ShowLoginPage}">
 		<jsp:include page="login.jsp" />
