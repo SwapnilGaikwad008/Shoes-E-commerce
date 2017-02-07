@@ -1,7 +1,5 @@
 package com.niit.shoppingcart.daoimpl;
 
-
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -15,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.niit.shoppingcart.dao.CartDAO;
 import com.niit.shoppingcart.model.Cart;
 
-@SuppressWarnings("serial")
 @Repository("CartDAO")
 public class CartDAOImpl implements CartDAO, Serializable{
 
