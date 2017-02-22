@@ -87,9 +87,4 @@ public class Cart implements Serializable{
 		this.stock = stock;
 	}
 
-	
-
-	
-
-
 }

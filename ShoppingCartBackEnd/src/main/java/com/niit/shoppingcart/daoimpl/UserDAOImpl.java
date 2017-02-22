@@ -1,9 +1,5 @@
 package com.niit.shoppingcart.daoimpl;
 
-
-
-
-import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -21,7 +17,7 @@ import com.niit.shoppingcart.model.User;
 
 
 @Repository("userDAO")
-public class UserDAOImpl implements UserDAO,Serializable {
+public class UserDAOImpl implements UserDAO {
 
 	Logger log = LoggerFactory.getLogger(UserDAOImpl.class);
 
@@ -128,16 +124,6 @@ public class UserDAOImpl implements UserDAO,Serializable {
 
 		return null;
 
-	}
-
-	public boolean save(User user) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public void update(String id) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

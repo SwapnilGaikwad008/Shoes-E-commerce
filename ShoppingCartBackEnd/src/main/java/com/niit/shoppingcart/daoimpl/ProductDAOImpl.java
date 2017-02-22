@@ -2,6 +2,7 @@ package com.niit.shoppingcart.daoimpl;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -111,7 +112,27 @@ public class ProductDAOImpl implements ProductDAO,Serializable {
 		return (Product) sessionFactory.getCurrentSession().get(Product.class, id);
 
 	}
+	
 
+	@Transactional
+	public List<Product> getAll() 
+		{
+
+			String hql ="from Product";
+			Query query = sessionFactory.getCurrentSession().createQuery(hql);
+			return query.list();
+		}
+	
+	@Transactional
+	public List<String> productnames() 
+		{
+			List<String> list=new ArrayList<String>();
+			Query query = sessionFactory.getCurrentSession().createQuery("from Product");
+			List<Product> productList =query.list();
+			for(int i=0; i<productList.size(); i++)
+				list.add(productList.get(i).getName());
+			return list;
+		}
 	
 }
 

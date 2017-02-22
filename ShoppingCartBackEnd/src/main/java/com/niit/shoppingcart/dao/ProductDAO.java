@@ -10,6 +10,8 @@ public interface ProductDAO {
 	
 	public List<Product> listByCategoryAndSubCategory(String categoryId, String subCategoryId);
 
+	public List<Product> getAll(); 
+	
 	public Product get(String id);
 
 	public boolean save(Product product);
@@ -17,5 +19,7 @@ public interface ProductDAO {
 	public boolean update(Product product);
 	
 	public boolean delete(Product product);
+	
+	public List<String> productnames();
 
 }

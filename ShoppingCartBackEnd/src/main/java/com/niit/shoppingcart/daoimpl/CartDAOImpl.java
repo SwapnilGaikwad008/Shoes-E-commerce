@@ -91,4 +91,9 @@ public class CartDAOImpl implements CartDAO, Serializable{
 		return query.list();
 	}
 
+	public boolean delete(Cart id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
